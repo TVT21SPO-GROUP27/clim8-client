@@ -20,7 +20,7 @@ export default function Tieto() {
 */
 
 useEffect(() => {
-    const address = API_URL
+    const address = API_URL;
 
     console.log(address);
 
@@ -39,10 +39,7 @@ useEffect(() => {
     return (
         <>
             <h3>Climate</h3>
-            <p>{data}</p>
-            <p>{month}</p>
-            <p>{SSeries}</p>
-            <p>{year}</p>
+            <p>{data}, {month}, {SSeries}, {year}</p>
         </>
     )
 /*

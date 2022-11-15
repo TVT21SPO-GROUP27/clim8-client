@@ -11,7 +11,7 @@ export function LuoKäyttäjä() {
 
   return (
     <div>
-    <h3>Kirjaudu sisään</h3>
+    <h3>Luo Käyttäjä</h3>
     <form>
         <div>
             <label>Nimi</label>
