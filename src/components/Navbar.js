@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import '../styles/Navbar.css';
  
 
 function Navbar() {
@@ -12,6 +11,9 @@ function Navbar() {
         <ul>
           <li class="nav-item">
             <Link className="nav-link" to="/kirjaudu">Kirjaudu Sisään</Link>
+          </li>
+          <li class="nav-item">
+            <Link className="nav-link" to="/tieto">Tieto</Link>
           </li>
         </ul>
       </div>

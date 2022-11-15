@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import '../styles/kirjaudu.css';
 
 export function KirjauduSisään() {
     const [sposti, setSposti] = useState("");
