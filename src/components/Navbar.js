@@ -13,6 +13,9 @@ function Navbar() {
             <Link className="nav-link" to="/kirjaudu">Kirjaudu Sisään</Link>
           </li>
           <li class="nav-item">
+            <Link className="nav-link" to="/luokayttaja">Luo Käyttäjä</Link>
+          </li>
+          <li class="nav-item">
             <Link className="nav-link" to="/tieto">Tieto</Link>
           </li>
         </ul>

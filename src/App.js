@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import { KirjauduSisään } from './components/KirjauduSisään';
 import { Home } from './components/Home';
 import  Tieto  from './components/tieto'
+import { LuoKäyttäjä } from './components/LuoKäyttäjä';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path='/' element={<Home />} />
       <Route path='/kirjaudu' element={<KirjauduSisään />} />
       <Route path='/tieto' element={<Tieto />} />
+      <Route path='/luokayttaja' element={<LuoKäyttäjä />} />
     </Routes>
     </>
   );
