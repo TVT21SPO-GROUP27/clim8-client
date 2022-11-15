@@ -43,11 +43,12 @@ export default function EkaVisualisointi() {
         axios.get("http://localhost:8080/hadcrutdata")
         .then(res => {
             console.log(res);
-            for(const dataObj in res.data.data){
-                data.push(parseInt(dataObj.data));
-                year.push(parseInt(dataObj.year));
-                month.push(parseInt(dataObj.month));
-        }
+            const json = JSON.parse(JSON.stringify(res.data));
+            for(var i = 0; i < Object.keys(json).length; i++) {
+                data.push(parseFloat(json[i].data));
+                year.push(parseInt(json[i].year));
+                month.push(parseInt(json[i].month));
+            }
         setChartData({
             datasets: [{
                 label: 'Climate',
@@ -56,11 +57,9 @@ export default function EkaVisualisointi() {
         });
         })
         .catch (error => {
-        alert(error);
+            alert(error);
         })
     }
-
-
 
     useEffect(() => {
         Chart();
@@ -68,7 +67,7 @@ export default function EkaVisualisointi() {
     return (
         <div style={{display: 'flex', alingItems: 'center', flexWrap: 'wrap'}}>
             <div><Line data={chartData}/></div>
-            
+
         </div>
     )
 }
