@@ -1,73 +1,119 @@
-import {bar, Line, Pie} from 'react-chartjs-2';
-import { Chart as ChartJs } from 'chart.js';
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import {useEffect, useState} from 'react';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+
+import { Bar, Line } from 'react-chartjs-2';
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+const options = {
+    indexAxis: 'y',
+    elements: {
+      bar: {
+        borderWidth: 2,
+      },
+    },
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'right',
+      },
+      title: {
+        display: true,
+        text: 'Ilmasto 1850-2022',
+      },
+    },
+  };
+
 
 export default function EkaVisualisointi() {
-    /*const [data, setData] = useState(0);
-    const [month, setMonth] = useState(0);
-    const [SSeries, setSSeries] = useState('');
-    const [year, setYear] = useState(0);*/
-/*
-    const climate = [axios.get("http://localhost:8080/hadcrutdata")
-    .then((response) => {
-        console.log(response.data);
-        setData(response.data[0].data);
-        setMonth(response.data[0].month);
-        setYear(response.data[0].year);
-        setSSeries(response.data[0].summarySeries);
-    }).catch (error => {
-        alert(error);
-    })]
-
-    const [chartData, setchartData] = useState({
-        labels: climate.map(d => d.year),
+    const [data, setData] = useState({
+        labels:['Temperature'],
         datasets: [
+          {
+            label: 'Dataset 1',
+            data:[],
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgba(25, 90, 13, 0.5)',
+          },
+          {
+            label: 'Dataset 2',
+            data:[],
+            borderColor: 'rgb(53, 162, 235)',
+            backgroundColor: 'rgba(53, 162, 235, 0.5)',
+          },
+        ],
+      });
+    useEffect(()=> {
+       const fetchData= async()=> {
+           const url = 'http://localhost:8080/hadcrutdata'
+           const dataSet1 = [];
+           const dataSet2 = [];
+         await fetch(url).then((data)=> {
+             console.log(data)
+             const res = data.json();
+             return res
+         }).then((res) => {
+             console.log(res)
+            for (const val of res) {
+                dataSet1.push(val.data);
+                dataSet2.push(val.year)
+            }
+            setData({
+                labels:dataSet1,
+                datasets: [
+                  {
+                    label: 'Dataset ID',
+                    data:dataSet2,
+                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgba(99, 132, 0.5)',
+                  }/*,
+                  {
+                    label: 'Dataset ID2',
+                    data:dataSet2,
+                    borderColor: 'rgb(53, 162, 235)',
+                    backgroundColor: 'rgba(53, 235, 0.5)',
+                  },*/
+                ],
+              })
+            console.log(dataSet1, dataSet2)
+         }).catch(e => {
+                console.log("error", e)
+            })
+        }
+        
+        fetchData();
+    },[])
+   
+    return(
+      <div style={{width:'80%', height:'50%'}}>
             {
-                label: "Climate",
-                data: climate.map(d => d.data)
+                console.log(data)
             }
-        ]
-    })*/
-    const [chartData, setChartData]  = useState({});
-    /*const [data, setData] = useState([]);
-    const [month, setMonth] = useState([]);
-    const [SSeries, setSSeries] = useState([]);
-    const [year, setYear] = useState([]);*/
-    
-    const Chart = () => {
-        let data = [];
-        let year = [];
-        let month = [];
-
-        axios.get("http://localhost:8080/hadcrutdata")
-        .then(res => {
-            console.log(res);
-            const json = JSON.parse(JSON.stringify(res.data));
-            for(var i = 0; i < Object.keys(json).length; i++) {
-                data.push(parseFloat(json[i].data));
-                year.push(parseInt(json[i].year));
-                month.push(parseInt(json[i].month));
-            }
-        setChartData({
-            datasets: [{
-                label: 'Climate',
-                    data: data
-            }]
-        });
-        })
-        .catch (error => {
-            alert(error);
-        })
-    }
-
-    useEffect(() => {
-        Chart();
-      }, []);
-    return (
-        <div style={{display: 'flex', alingItems: 'center', flexWrap: 'wrap'}}>
+            <Bar data={data} options={options}/>
+         </div>
+         )
+         /*
+         <div style={{display: 'flex', alingItems: 'center', flexWrap: 'wrap'}}>
             <div><Line data={chartData}/></div>
-
         </div>
-    )
+        <div style={{width:'80%', height:'50%'}}>
+            {
+                console.log(data)
+            }
+            <Bar data={data} options={options}/>
+         </div>
+         */
 }

@@ -26,7 +26,7 @@ export function LuoKäyttäjä() {
             <input type="string" value={salasana} onChange={e => setSalasana(e.target.value)} />
         </div>
         <button block="true" size="lg" type="submit" disabled={!PituusTarkistus()}>
-          Kirjaudu
+          Luo Käyttäjä
         </button>
     </form>
     </div>
