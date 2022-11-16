@@ -6,41 +6,27 @@ import {
     BarElement,
     Title,
     Tooltip,
+    PointElement,
     Legend,
+    Filler,
+    LineElement,
   } from 'chart.js';
 
-import { Bar, Line } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 ChartJS.register(
+    LineElement,
     CategoryScale,
     LinearScale,
-    BarElement,
+    PointElement,
     Title,
     Tooltip,
+    Filler,
     Legend
   );
-const options = {
-    indexAxis: 'y',
-    elements: {
-      bar: {
-        borderWidth: 2,
-      },
-    },
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'right',
-      },
-      title: {
-        display: true,
-        text: 'Ilmasto 1850-2022',
-      },
-    },
-  };
-
 
 export default function EkaVisualisointi() {
     const [data, setData] = useState({
-        labels:['Temperature'],
+        labels:'Ilmasto 1850-2022',
         datasets: [
           {
             label: 'Dataset 1',
@@ -48,19 +34,13 @@ export default function EkaVisualisointi() {
             borderColor: 'rgb(255, 99, 132)',
             backgroundColor: 'rgba(25, 90, 13, 0.5)',
           },
-          {
-            label: 'Dataset 2',
-            data:[],
-            borderColor: 'rgb(53, 162, 235)',
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-          },
         ],
       });
     useEffect(()=> {
        const fetchData= async()=> {
            const url = 'http://localhost:8080/hadcrutdata'
-           const dataSet1 = [];
-           const dataSet2 = [];
+           const temp = [];
+           const year = [];
          await fetch(url).then((data)=> {
              console.log(data)
              const res = data.json();
@@ -68,27 +48,23 @@ export default function EkaVisualisointi() {
          }).then((res) => {
              console.log(res)
             for (const val of res) {
-                dataSet1.push(val.data);
-                dataSet2.push(val.year)
+                temp.push(val.data);
+                year.push(val.year)
             }
             setData({
-                labels:dataSet1,
+                labels:year,
                 datasets: [
                   {
-                    label: 'Dataset ID',
-                    data:dataSet2,
-                    borderColor: 'rgb(255, 99, 132)',
-                    backgroundColor: 'rgba(99, 132, 0.5)',
-                  }/*,
-                  {
-                    label: 'Dataset ID2',
-                    data:dataSet2,
-                    borderColor: 'rgb(53, 162, 235)',
-                    backgroundColor: 'rgba(53, 235, 0.5)',
-                  },*/
+                    label: 'Dataset',
+                    data:temp,
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1,
+                    indexAxis: 'x'
+                  }
                 ],
               })
-            console.log(dataSet1, dataSet2)
+            console.log(temp, year)
          }).catch(e => {
                 console.log("error", e)
             })
@@ -98,12 +74,9 @@ export default function EkaVisualisointi() {
     },[])
    
     return(
-      <div style={{width:'80%', height:'50%'}}>
-            {
-                console.log(data)
-            }
-            <Bar data={data} options={options}/>
-         </div>
+        <div style={{width:'80%', height:'50%'}}>
+            <div><Line data={data}/></div>
+        </div>
          )
          /*
          <div style={{display: 'flex', alingItems: 'center', flexWrap: 'wrap'}}>
