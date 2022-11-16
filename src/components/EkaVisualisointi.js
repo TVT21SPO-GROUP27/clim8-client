@@ -1,73 +1,92 @@
-import {bar, Line, Pie} from 'react-chartjs-2';
-import { Chart as ChartJs } from 'chart.js';
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import {useEffect, useState} from 'react';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    PointElement,
+    Legend,
+    Filler,
+    LineElement,
+  } from 'chart.js';
+
+import { Line } from 'react-chartjs-2';
+ChartJS.register(
+    LineElement,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    Title,
+    Tooltip,
+    Filler,
+    Legend
+  );
 
 export default function EkaVisualisointi() {
-    /*const [data, setData] = useState(0);
-    const [month, setMonth] = useState(0);
-    const [SSeries, setSSeries] = useState('');
-    const [year, setYear] = useState(0);*/
-/*
-    const climate = [axios.get("http://localhost:8080/hadcrutdata")
-    .then((response) => {
-        console.log(response.data);
-        setData(response.data[0].data);
-        setMonth(response.data[0].month);
-        setYear(response.data[0].year);
-        setSSeries(response.data[0].summarySeries);
-    }).catch (error => {
-        alert(error);
-    })]
-
-    const [chartData, setchartData] = useState({
-        labels: climate.map(d => d.year),
+    const [data, setData] = useState({
+        labels:'Ilmasto 1850-2022',
         datasets: [
-            {
-                label: "Climate",
-                data: climate.map(d => d.data)
+          {
+            label: 'Dataset 1',
+            data:[],
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgba(25, 90, 13, 0.5)',
+          },
+        ],
+      });
+    useEffect(()=> {
+       const fetchData= async()=> {
+           const url = 'http://localhost:8080/hadcrutdata'
+           const temp = [];
+           const year = [];
+         await fetch(url).then((data)=> {
+             console.log(data)
+             const res = data.json();
+             return res
+         }).then((res) => {
+             console.log(res)
+            for (const val of res) {
+                temp.push(val.data);
+                year.push(val.year)
             }
-        ]
-    })*/
-    const [chartData, setChartData]  = useState({});
-    /*const [data, setData] = useState([]);
-    const [month, setMonth] = useState([]);
-    const [SSeries, setSSeries] = useState([]);
-    const [year, setYear] = useState([]);*/
-    
-    const Chart = () => {
-        let data = [];
-        let year = [];
-        let month = [];
-
-        axios.get("http://localhost:8080/hadcrutdata")
-        .then(res => {
-            console.log(res);
-            const json = JSON.parse(JSON.stringify(res.data));
-            for(var i = 0; i < Object.keys(json).length; i++) {
-                data.push(parseFloat(json[i].data));
-                year.push(parseInt(json[i].year));
-                month.push(parseInt(json[i].month));
-            }
-        setChartData({
-            datasets: [{
-                label: 'Climate',
-                    data: data
-            }]
-        });
-        })
-        .catch (error => {
-            alert(error);
-        })
-    }
-
-    useEffect(() => {
-        Chart();
-      }, []);
-    return (
-        <div style={{display: 'flex', alingItems: 'center', flexWrap: 'wrap'}}>
-            <div><Line data={chartData}/></div>
-
+            setData({
+                labels:year,
+                datasets: [
+                  {
+                    label: 'Dataset',
+                    data:temp,
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1,
+                    indexAxis: 'x'
+                  }
+                ],
+              })
+            console.log(temp, year)
+         }).catch(e => {
+                console.log("error", e)
+            })
+        }
+        
+        fetchData();
+    },[])
+   
+    return(
+        <div style={{width:'80%', height:'50%'}}>
+            <div><Line data={data}/></div>
         </div>
-    )
+         )
+         /*
+         <div style={{display: 'flex', alingItems: 'center', flexWrap: 'wrap'}}>
+            <div><Line data={chartData}/></div>
+        </div>
+        <div style={{width:'80%', height:'50%'}}>
+            {
+                console.log(data)
+            }
+            <Bar data={data} options={options}/>
+         </div>
+         */
 }
