@@ -1,34 +1,62 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 
 export function LuoKäyttäjä() {
     const [name, setName] = useState("");
     const [sposti, setSposti] = useState("");
     const [salasana, setSalasana] = useState("");
+    const [vahvistettuSalasana, vahvistaSalasana] = useState(null)
+    const [error, setError] = useState(false)
 
-    function PituusTarkistus() {
-    return name.length > 0 && salasana.length > 0;
-}
+  const handleSubmit= (e) => {
+    e.preventDefault(); 
+    if (salasana !== vahvistettuSalasana) {
+      setError(true)
+      return
+    }
+
+    console.log('nimi', name)
+    console.log('sposti', sposti)
+    console.log('salasana', salasana)
+    console.log('vahvistettuSalasana', vahvistettuSalasana)
+    
+  }
 
   return (
     <div>
-    <h3>Luo Käyttäjä</h3>
-    <form>
+      <h3>Luo Käyttäjä</h3>
+       <form onSubmit={handleSubmit}>
         <div>
-            <label>Nimi</label>
-            <input type="string" value={name} onChange={e => setName(e.target.value)} />
+            <input type="string" 
+            value={name}
+  	        placeholder = "Nimi"
+            required
+            onChange={e => setName(e.target.value)} />
         </div>
-        <div>
-            <label>Sähköposti</label>
-            <input type="string" value={sposti} onChange={e => setSposti(e.target.value)} />
-        </div>
-        <div>
-            <label>Salasana</label>
-            <input type="string" value={salasana} onChange={e => setSalasana(e.target.value)} />
-        </div>
-        <button block="true" size="lg" type="submit" disabled={!PituusTarkistus()}>
-          Luo Käyttäjä
-        </button>
-    </form>
+            <div>
+                <input type="string"
+                value={sposti}
+                placeholder = "Sähköposti"
+                required
+                onChange={e => setSposti(e.target.value)} />
+            </div>
+                <div>
+                    <input type="password" 
+                    value={salasana}
+                    placeholder="Salasana"
+                    required
+                    onChange={e => setSalasana(e.target.value)} />
+                </div>
+              <div>
+                <input type="password"
+                value = {vahvistettuSalasana}
+                placeholder="Vahvista salasana"
+                required
+                onChange = {e => vahvistaSalasana(e.target.value)} />
+              </div>
+                <input type = "submit" />
+        {error && <p>Salasanat ei täsmää keskenään.</p>}
+      </form>
     </div>
   )
 }

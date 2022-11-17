@@ -4,7 +4,6 @@ import {
     Chart as ChartJS,
     CategoryScale,
     LinearScale,
-    BarElement,
     Title,
     Tooltip,
     PointElement,
@@ -165,15 +164,4 @@ export default function EkaVisualisointi() {
             <div><Line options={config} data={data}/></div>
         </div>
          )
-         /*
-         <div style={{display: 'flex', alingItems: 'center', flexWrap: 'wrap'}}>
-            <div><Line data={chartData}/></div>
-        </div>
-        <div style={{width:'80%', height:'50%'}}>
-            {
-                console.log(data)
-            }
-            <Bar data={data} options={options}/>
-         </div>
-         */
 }
