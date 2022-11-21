@@ -209,6 +209,8 @@ export default function EkaVisualisointi() {
         <div style={{width:'50%', height:'10%'}}>
             <div><Line options={config} data={data2}/></div>
         </div>
+        <p>Lähde: </p>
+        <a href="https://www.metoffice.gov.uk/hadobs/hadcrut5/">HadCRUT5</a>
       </div>
          )
 }

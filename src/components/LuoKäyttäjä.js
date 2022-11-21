@@ -3,22 +3,30 @@ import React, { useState } from 'react';
 
 export function LuoKäyttäjä() {
     const [name, setName] = useState("");
-    const [sposti, setSposti] = useState("");
-    const [salasana, setSalasana] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [vahvistettuSalasana, vahvistaSalasana] = useState(null)
     const [error, setError] = useState(false)
+    const url = "http://localhost:8080/users";
 
-  const handleSubmit= (e) => {
+  const handleSubmit= async (e) => {
     e.preventDefault(); 
-    if (salasana !== vahvistettuSalasana) {
+    if (password !== vahvistettuSalasana) {
       setError(true)
       return
     }
 
-    console.log('nimi', name)
+    try {
+      const res = await axios.post(url, 
+      {username: name, email: email, password: password});
+      console.log(res.data);
+    } catch (error) {
+      console.log(error.response);
+    }
+    /*console.log('nimi', name)
     console.log('sposti', sposti)
     console.log('salasana', salasana)
-    console.log('vahvistettuSalasana', vahvistettuSalasana)
+    console.log('vahvistettuSalasana', vahvistettuSalasana)*/
     
   }
 
@@ -27,25 +35,25 @@ export function LuoKäyttäjä() {
       <h3>Luo Käyttäjä</h3>
        <form onSubmit={handleSubmit}>
         <div>
-            <input type="string" 
+            <input type="name" 
             value={name}
   	        placeholder = "Nimi"
             required
             onChange={e => setName(e.target.value)} />
         </div>
             <div>
-                <input type="string"
-                value={sposti}
+                <input type="email"
+                value={email}
                 placeholder = "Sähköposti"
                 required
-                onChange={e => setSposti(e.target.value)} />
+                onChange={e => setEmail(e.target.value)} />
             </div>
                 <div>
                     <input type="password" 
-                    value={salasana}
+                    value={password}
                     placeholder="Salasana"
                     required
-                    onChange={e => setSalasana(e.target.value)} />
+                    onChange={e => setPassword(e.target.value)} />
                 </div>
               <div>
                 <input type="password"
