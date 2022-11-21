@@ -90,6 +90,19 @@ export default function EkaVisualisointi() {
           },
         ]
       });
+
+      const [data2, setData2] = useState({
+        labels:'Ilmasto 1850-2022 Vuosittain',
+        datasets: [
+          {
+            label: 'Dataset 2',
+            data:[],
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgba(25, 90, 13, 0.5)',
+          },
+        ]
+      });
+
     useEffect(()=> {
        const fetchData= async()=> {
           const url = 'http://localhost:8080/hadcrutdata'
@@ -113,10 +126,10 @@ export default function EkaVisualisointi() {
             console.log(res)
             for (const val of res) {
               if(val.month === 0) {
-                console.log("Found data for anual!");
+                console.log("Found data for annual!");
                 anual.get(getCorrectSummarySeries(val.summarySeries)).set(val.year, val.data);
               } else {
-                console.log("Found data for montly!");
+                console.log("Found data for monthly!");
                 monthly.get(getCorrectSummarySeries(val.summarySeries)).set(val.month + "/" + val.year, val.data);
               }
             }
@@ -150,6 +163,35 @@ export default function EkaVisualisointi() {
                   }
                 ]
               })
+              setData2({
+                labels: Array.from(anual.get("global").keys()),
+                datasets: [
+                  {
+                    label: 'Annual - Global',
+                    data: Array.from(anual.get("global").values()),
+                    fill: false,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1,
+                    indexAxis: 'x'
+                  },
+                  {
+                    label: 'Annual - Northern',
+                    data: Array.from(anual.get("northern").values()),
+                    fill: false,
+                    borderColor: 'rgb(0, 234, 255)',
+                    tension: 0.1,
+                    indexAxis: 'x'
+                  },
+                  {
+                    label: 'Annual - Southern',
+                    data: Array.from(anual.get("southern").values()),
+                    fill: false,
+                    borderColor: 'rgb(0, 0, 255)',
+                    tension: 0.1,
+                    indexAxis: 'x'
+                  }
+                ]
+              })
             //console.log(temp, year)
          }).catch(e => {
                 console.log("error", e)
@@ -160,8 +202,13 @@ export default function EkaVisualisointi() {
     },[])
    
     return(
+      <div>
         <div style={{width:'50%', height:'10%'}}>
             <div><Line options={config} data={data}/></div>
         </div>
+        <div style={{width:'50%', height:'10%'}}>
+            <div><Line options={config} data={data2}/></div>
+        </div>
+      </div>
          )
 }

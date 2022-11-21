@@ -1,7 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Button } from 'react-bootstrap/Button'
-
 
 function Navbar() {
   return (
@@ -19,15 +17,12 @@ function Navbar() {
         <li class="nav-item">
           <Link className="nav-link" to="/luokayttaja">Luo Käyttäjä</Link>
         </li>
-        <li class="nav-item">
-          <Link className="nav-link" to="/tieto">Tieto</Link>
-        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Visualisoinnit
           </a>
           <ul class="dropdown-menu">
-            <li><Link class="dropdown-item" to="/1Visualisointi">1. Visualisointi</Link></li>
+            <li><Link class="dropdown-item" to="/1Visualisointi">Ilmasto 1850-2022</Link></li>
           </ul>
         </li>
       </ul>
