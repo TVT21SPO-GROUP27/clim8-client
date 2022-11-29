@@ -1,9 +1,11 @@
 import zoomPlugin from 'chartjs-plugin-zoom';
 import {useEffect, useState} from 'react';
+import 'chartjs-adapter-luxon';
 import {
     Chart as ChartJS,
     CategoryScale,
     LinearScale,
+    TimeScale,
     Title,
     Tooltip,
     PointElement,
@@ -13,21 +15,12 @@ import {
   } from 'chart.js';
 
 import { Line } from 'react-chartjs-2';
-ChartJS.register(
-    LineElement,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    Title,
-    Tooltip,
-    Filler,
-    Legend
-  );
 
 ChartJS.register(
     LineElement,
     CategoryScale,
     LinearScale,
+    TimeScale,
     PointElement,
     Title,
     Tooltip,
@@ -45,10 +38,7 @@ function getCorrectSummarySeries(summarySeries) {
 const config = {
   scales: {
     x: {
-      min: 1,
-      max: 100,
-      suggestedMax: 40,
-      suggestedMin: 1
+      type: "time"
     },
     y: {
       min: -1,
@@ -127,10 +117,10 @@ export default function EkaVisualisointi() {
             for (const val of res) {
               if(val.month === 0) {
                 console.log("Found data for annual!");
-                anual.get(getCorrectSummarySeries(val.summarySeries)).set(val.year, val.data);
+                anual.get(getCorrectSummarySeries(val.summarySeries)).set(val.year.toString(), val.data);
               } else {
                 console.log("Found data for monthly!");
-                monthly.get(getCorrectSummarySeries(val.summarySeries)).set(val.month + "/" + val.year, val.data);
+                monthly.get(getCorrectSummarySeries(val.summarySeries)).set(val.year.toString() + "-" + val.month.toString().padStart(2,"0")+ "-01", val.data);
               }
             }
 
