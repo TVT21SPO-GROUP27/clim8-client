@@ -1,5 +1,6 @@
 import zoomPlugin from 'chartjs-plugin-zoom';
 import {useEffect, useState} from 'react';
+import { Line } from 'react-chartjs-2';
 import 'chartjs-adapter-luxon';
 import {
     Chart as ChartJS,
@@ -13,8 +14,6 @@ import {
     Filler,
     LineElement,
   } from 'chart.js';
-
-import { Line } from 'react-chartjs-2';
 
 ChartJS.register(
     LineElement,
@@ -32,7 +31,8 @@ ChartJS.register(
 function getCorrectSummarySeries(summarySeries) {
   if(summarySeries === "HADCRUT_GLOBAL") return "global";
   else if(summarySeries === "HADCRUT_NORTHERN_HEMISPHERE") return "northern";
-  else return "southern";
+  else if(summarySeries === "HADCRUT_SOUTHERN_HEMISPHERE") return "southern";
+  else return "";
 }
 
 const config = {
@@ -78,25 +78,21 @@ export default function EkaVisualisointi() {
             borderColor: 'rgb(255, 99, 132)',
             backgroundColor: 'rgba(25, 90, 13, 0.5)',
           },
-        ]
-      });
-
-      const [data2, setData2] = useState({
-        labels:'Ilmasto 1850-2022 Vuosittain',
-        datasets: [
           {
             label: 'Dataset 2',
             data:[],
             borderColor: 'rgb(255, 99, 132)',
             backgroundColor: 'rgba(25, 90, 13, 0.5)',
-          },
+          }
         ]
       });
 
     useEffect(()=> {
        const fetchData= async()=> {
           const url = 'http://localhost:8080/hadcrutdata'
-
+          const url2 = 'http://localhost:8080/mobergdata'
+          const dataset2 = [];
+          
           let anual = new Map([
             ["global", new Map()],
             ["northern", new Map()],
@@ -108,6 +104,7 @@ export default function EkaVisualisointi() {
             ["northern", new Map()],
             ["southern", new Map()]
           ]);
+
          await fetch(url).then((data)=> {
             console.log(data)
             const res = data.json();
@@ -122,7 +119,21 @@ export default function EkaVisualisointi() {
                 console.log("Found data for monthly!");
                 monthly.get(getCorrectSummarySeries(val.summarySeries)).set(val.year.toString() + "-" + val.month.toString().padStart(2,"0")+ "-01", val.data);
               }
-            }
+            }}).catch(e => {
+              console.log("error", e)
+          })
+
+        await fetch(url2).then((data)=> {
+            console.log(data)
+            const res = data.json();
+            return res
+         }).then((res) => {
+          console.log(res)
+          for (const val of res) {
+           dataset2.push(val.data);
+          }}).catch(e => {
+            console.log("error", e)
+        })
 
             setData({
                 labels: Array.from(monthly.get("global").keys()),
@@ -150,12 +161,7 @@ export default function EkaVisualisointi() {
                     borderColor: 'rgb(0, 0, 255)',
                     tension: 0.1,
                     indexAxis: 'x'
-                  }
-                ]
-              })
-              setData2({
-                labels: Array.from(anual.get("global").keys()),
-                datasets: [
+                  },
                   {
                     label: 'Annual - Global',
                     data: Array.from(anual.get("global").values()),
@@ -179,13 +185,17 @@ export default function EkaVisualisointi() {
                     borderColor: 'rgb(0, 0, 255)',
                     tension: 0.1,
                     indexAxis: 'x'
+                  },
+                  {
+                    label: 'Northern Hemisphere 2,000-year temperature reconstruction',
+                    data: dataset2,
+                    fill: false,
+                    borderColor: 'rgb(0, 234, 255)',
+                    tension: 0.1,
+                    indexAxis: 'x'
                   }
                 ]
               })
-            //console.log(temp, year)
-         }).catch(e => {
-                console.log("error", e)
-            })
         }
         
         fetchData();
@@ -195,9 +205,6 @@ export default function EkaVisualisointi() {
       <div>
         <div style={{width:'50%', height:'10%'}}>
             <div><Line options={config} data={data}/></div>
-        </div>
-        <div style={{width:'50%', height:'10%'}}>
-            <div><Line options={config} data={data2}/></div>
         </div>
         <p>Lähde: </p>
         <a href="https://www.metoffice.gov.uk/hadobs/hadcrut5/">HadCRUT5</a>
