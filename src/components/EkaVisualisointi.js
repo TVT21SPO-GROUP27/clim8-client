@@ -88,6 +88,10 @@ export default function EkaVisualisointi() {
       });
       const [v1globalannual, setv1Globalannual] = useState();
       const [v1globalmonthly, setv1Globalmonthly] = useState();
+      const [v1globalannualnorth, setv1Globalannualnorth] = useState();
+      const [v1globalmonthlynorth, setv1Globalmonthlynorth] = useState();
+      const [v1globalannualsouth, setv1Globalannualsouth] = useState();
+      const [v1globalmonthlysouth, setv1Globalmonthlysouth] = useState();
 
     useEffect(()=> {
        const fetchData= async()=> {
@@ -116,6 +120,10 @@ export default function EkaVisualisointi() {
 
           const globalannual = [];
           const globalmonthly = [];
+          const globalannualnorth = [];
+          const globalmonthlynorth = [];
+          const globalannualsouth = [];
+          const globalmonthlysouth = [];
 
             for (const val of res) {
               if(val.summarySeries === "HADCRUT_GLOBAL"){
@@ -128,10 +136,33 @@ export default function EkaVisualisointi() {
                   monthly.get(getCorrectSummarySeries(val.summarySeries)).set(val.year.toString() + "-" + val.month.toString().padStart(2,"0")+ "-01", val.data);
                   globalmonthly.push({time:val.year.toString() + "-" + val.month.toString().padStart(2,"0")+ "-01", data: val.data})
                 }
+              } else if (val.summarySeries === "HADCRUT_NORTHERN_HEMISPHERE"){
+                if(val.month === 0) {
+                  console.log("Found data for annual!");
+                  anual.get(getCorrectSummarySeries(val.summarySeries)).set(val.year.toString(), val.data);
+                  globalannualnorth.push({time:val.year.toString(), data: val.data})
+                } else {
+                  console.log("Found data for monthly!");
+                  monthly.get(getCorrectSummarySeries(val.summarySeries)).set(val.year.toString() + "-" + val.month.toString().padStart(2,"0")+ "-01", val.data);
+                  globalmonthlynorth.push({time:val.year.toString() + "-" + val.month.toString().padStart(2,"0")+ "-01", data: val.data})
+                }
+            } else if (val.summarySeries === "HADCRUT_SOUTHERN_HEMISPHERE"){
+              if(val.month === 0) {
+                console.log("Found data for annual!");
+                anual.get(getCorrectSummarySeries(val.summarySeries)).set(val.year.toString(), val.data);
+                globalannualsouth.push({time:val.year.toString(), data: val.data})
+              } else {
+                console.log("Found data for monthly!");
+                monthly.get(getCorrectSummarySeries(val.summarySeries)).set(val.year.toString() + "-" + val.month.toString().padStart(2,"0")+ "-01", val.data);
+                globalmonthlysouth.push({time:val.year.toString() + "-" + val.month.toString().padStart(2,"0")+ "-01", data: val.data})
               }
-            }
+        }}
             setv1Globalannual(globalannual);
             setv1Globalmonthly(globalmonthly);
+            setv1Globalannualnorth(globalannualnorth);
+            setv1Globalmonthlynorth(globalmonthlynorth);
+            setv1Globalannualsouth(globalannualsouth);
+            setv1Globalmonthlysouth(globalmonthlysouth);
           }).catch(e => {
               console.log("error", e)
           })
@@ -168,23 +199,29 @@ export default function EkaVisualisointi() {
             xAxisKey: "time",
             yAxisKey: "data",
           },
-        },/*
+        },
         {
           label: 'Monthly - Northern',
-          data: Array.from(monthly.get("northern").values()),
+          data: v1globalmonthlynorth,
           fill: false,
           borderColor: 'rgb(0, 234, 255)',
           tension: 0.1,
-          indexAxis: 'x'
+          parsing: {
+            xAxisKey: "time",
+            yAxisKey: "data",
+          }
         },
         {
           label: 'Monthly - Southern',
-          data: Array.from(monthly.get("southern").values()),
+          data: v1globalmonthlysouth,
           fill: false,
           borderColor: 'rgb(0, 0, 255)',
           tension: 0.1,
-          indexAxis: 'x'
-        },*/
+          parsing: {
+            xAxisKey: "time",
+            yAxisKey: "data",
+          }
+        },
         {
           label: 'Annual - Global',
           data: v1globalannual,
@@ -194,24 +231,30 @@ export default function EkaVisualisointi() {
           parsing: {
             xAxisKey: "time",
             yAxisKey: "data",
-          },
-        },/*
+          }
+        },
         {
           label: 'Annual - Northern',
-          data: Array.from(anual.get("northern").values()),
+          data: v1globalannualnorth,
           fill: false,
           borderColor: 'rgb(0, 234, 255)',
           tension: 0.1,
-          indexAxis: 'x'
+          parsing: {
+            xAxisKey: "time",
+            yAxisKey: "data",
+          }
         },
         {
           label: 'Annual - Southern',
-          data: Array.from(anual.get("southern").values()),
+          data: v1globalannualsouth,
           fill: false,
           borderColor: 'rgb(0, 0, 255)',
           tension: 0.1,
-          indexAxis: 'x'
-        },
+          parsing: {
+            xAxisKey: "time",
+            yAxisKey: "data",
+          }
+        },/*
         {
           label: 'Northern Hemisphere 2,000-year temperature reconstruction',
           data: dataset2,
