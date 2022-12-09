@@ -69,23 +69,7 @@ const config = {
 }
 
 export default function EkaVisualisointi() {
-    const [data, setData] = useState({
-        labels:'Ilmasto 1850-2022',
-        datasets: [
-          {
-            label: 'Dataset 1',
-            data:[],
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(25, 90, 13, 0.5)',
-          },
-          {
-            label: 'Dataset 2',
-            data:[],
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(25, 90, 13, 0.5)',
-          }
-        ]
-      });
+
       const [v1globalannual, setv1Globalannual] = useState();
       const [v1globalmonthly, setv1Globalmonthly] = useState();
       const [v1globalannualnorth, setv1Globalannualnorth] = useState();
@@ -177,7 +161,18 @@ export default function EkaVisualisointi() {
           const temp = [];
 
           for (const val of res) {
-           temp.push({time: val.year.toString(), data: val.data});
+            console.log("Found data for temperature reconstruction!")
+
+            if (val.year < 10){
+              temp.push({year: val.year.toString().padStart(4, "0"), data: val.data});
+            } else if ( val.year >=10 && val.year < 100) {
+              temp.push({year: val.year.toString().padStart(4, "0"), data: val.data});
+            } else if ( val.year >=100 && val.year < 1000) {
+              temp.push({year: val.year.toString().padStart(4, "0"), data: val.data});
+            } else {
+              temp.push({year: val.year.toString(), data: val.data});
+            }
+          
           }
           settempReconstruction(temp);
         }).catch(e => {
@@ -266,7 +261,7 @@ export default function EkaVisualisointi() {
           borderColor: 'rgb(0, 234, 255)',
           tension: 0.1,
           parsing: {
-            xAxisKey: "time",
+            xAxisKey: "year",
             yAxisKey: "data",
           }
         }
@@ -280,7 +275,13 @@ export default function EkaVisualisointi() {
         </div>
         <p>Lähde: </p>
         <p><a href="https://www.metoffice.gov.uk/hadobs/hadcrut5/">HadCRUT5</a></p>
+        <div>
         <p><a href="https://www.nature.com/articles/nature03265">nature.com</a></p>
+          <li>
+            Nature.com provides a dataset which reconstructs Earths temperature from the last 2000 years.
+          </li>
+        </div>
+        
       </div>
          )
 }

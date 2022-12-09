@@ -62,7 +62,7 @@ const config = {
   }
 }
 export default function KolmasVisualisointi() {
-    /*const [data, setData] = */ useState({
+  useState({
         labels:'Mauna Loa 1958-2022',
         datasets: [
           {
@@ -85,8 +85,6 @@ export default function KolmasVisualisointi() {
     useEffect(()=> {
        const fetchData= async()=> {
           const url = 'http://localhost:8080/maunaloadata'
-         // const url2 = 'http://localhost:8080/mobergdata'
-         // const dataset2 = [];
           
           let annual = new Map([]);
 
@@ -120,19 +118,6 @@ export default function KolmasVisualisointi() {
           }).catch(e => {
               console.log("error", e)
           })
-        /*
-        await fetch(url2).then((data)=> {
-            console.log(data)
-            const res = data.json();
-            return res
-         }).then((res) => {
-          console.log(res)
-          for (const val of res) {
-           dataset2.push(val.data);
-          }}).catch(e => {
-            console.log("error", e)
-        })
-        */
 
         }
         
