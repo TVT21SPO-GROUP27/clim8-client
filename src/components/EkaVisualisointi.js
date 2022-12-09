@@ -86,6 +86,8 @@ export default function EkaVisualisointi() {
           }
         ]
       });
+      const [v1globalannual, setv1Globalannual] = useState();
+      const [v1globalmonthly, setv1Globalmonthly] = useState();
 
     useEffect(()=> {
        const fetchData= async()=> {
@@ -111,15 +113,26 @@ export default function EkaVisualisointi() {
             return res
          }).then((res) => {
             console.log(res)
+
+          const globalannual = [];
+          const globalmonthly = [];
+
             for (const val of res) {
-              if(val.month === 0) {
-                console.log("Found data for annual!");
-                anual.get(getCorrectSummarySeries(val.summarySeries)).set(val.year.toString(), val.data);
-              } else {
-                console.log("Found data for monthly!");
-                monthly.get(getCorrectSummarySeries(val.summarySeries)).set(val.year.toString() + "-" + val.month.toString().padStart(2,"0")+ "-01", val.data);
+              if(val.summarySeries === "HADCRUT_GLOBAL"){
+                if(val.month === 0) {
+                  console.log("Found data for annual!");
+                  anual.get(getCorrectSummarySeries(val.summarySeries)).set(val.year.toString(), val.data);
+                  globalannual.push({time:val.year.toString(), data: val.data})
+                } else {
+                  console.log("Found data for monthly!");
+                  monthly.get(getCorrectSummarySeries(val.summarySeries)).set(val.year.toString() + "-" + val.month.toString().padStart(2,"0")+ "-01", val.data);
+                  globalmonthly.push({time:val.year.toString() + "-" + val.month.toString().padStart(2,"0")+ "-01", data: val.data})
+                }
               }
-            }}).catch(e => {
+            }
+            setv1Globalannual(globalannual);
+            setv1Globalmonthly(globalmonthly);
+          }).catch(e => {
               console.log("error", e)
           })
 
@@ -135,76 +148,85 @@ export default function EkaVisualisointi() {
             console.log("error", e)
         })
 
-            setData({
-                labels: Array.from(monthly.get("global").keys()),
-                datasets: [
-                  {
-                    label: 'Monthly - Global',
-                    data: Array.from(monthly.get("global").values()),
-                    fill: false,
-                    borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.1,
-                    indexAxis: 'x'
-                  },
-                  {
-                    label: 'Monthly - Northern',
-                    data: Array.from(monthly.get("northern").values()),
-                    fill: false,
-                    borderColor: 'rgb(0, 234, 255)',
-                    tension: 0.1,
-                    indexAxis: 'x'
-                  },
-                  {
-                    label: 'Monthly - Southern',
-                    data: Array.from(monthly.get("southern").values()),
-                    fill: false,
-                    borderColor: 'rgb(0, 0, 255)',
-                    tension: 0.1,
-                    indexAxis: 'x'
-                  },
-                  {
-                    label: 'Annual - Global',
-                    data: Array.from(anual.get("global").values()),
-                    fill: false,
-                    borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.1,
-                    indexAxis: 'x'
-                  },
-                  {
-                    label: 'Annual - Northern',
-                    data: Array.from(anual.get("northern").values()),
-                    fill: false,
-                    borderColor: 'rgb(0, 234, 255)',
-                    tension: 0.1,
-                    indexAxis: 'x'
-                  },
-                  {
-                    label: 'Annual - Southern',
-                    data: Array.from(anual.get("southern").values()),
-                    fill: false,
-                    borderColor: 'rgb(0, 0, 255)',
-                    tension: 0.1,
-                    indexAxis: 'x'
-                  },
-                  {
-                    label: 'Northern Hemisphere 2,000-year temperature reconstruction',
-                    data: dataset2,
-                    fill: false,
-                    borderColor: 'rgb(0, 234, 255)',
-                    tension: 0.1,
-                    indexAxis: 'x'
-                  }
-                ]
-              })
+
         }
         
         fetchData();
     },[])
+
+
+    let graphDataSets = {
+      //labels: Array.from(monthly.get("global").keys()),
+      datasets: [
+        {
+          label: 'Monthly - Global',
+          data: v1globalmonthly,
+          fill: false,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.1,
+          parsing: {
+            xAxisKey: "time",
+            yAxisKey: "data",
+          },
+        },/*
+        {
+          label: 'Monthly - Northern',
+          data: Array.from(monthly.get("northern").values()),
+          fill: false,
+          borderColor: 'rgb(0, 234, 255)',
+          tension: 0.1,
+          indexAxis: 'x'
+        },
+        {
+          label: 'Monthly - Southern',
+          data: Array.from(monthly.get("southern").values()),
+          fill: false,
+          borderColor: 'rgb(0, 0, 255)',
+          tension: 0.1,
+          indexAxis: 'x'
+        },*/
+        {
+          label: 'Annual - Global',
+          data: v1globalannual,
+          fill: false,
+          borderColor: 'rgb(255, 192, 192)',
+          tension: 0.1,
+          parsing: {
+            xAxisKey: "time",
+            yAxisKey: "data",
+          },
+        },/*
+        {
+          label: 'Annual - Northern',
+          data: Array.from(anual.get("northern").values()),
+          fill: false,
+          borderColor: 'rgb(0, 234, 255)',
+          tension: 0.1,
+          indexAxis: 'x'
+        },
+        {
+          label: 'Annual - Southern',
+          data: Array.from(anual.get("southern").values()),
+          fill: false,
+          borderColor: 'rgb(0, 0, 255)',
+          tension: 0.1,
+          indexAxis: 'x'
+        },
+        {
+          label: 'Northern Hemisphere 2,000-year temperature reconstruction',
+          data: dataset2,
+          fill: false,
+          borderColor: 'rgb(0, 234, 255)',
+          tension: 0.1,
+          indexAxis: 'x'
+        }*/
+      ]
+    }
    
     return(
       <div>
         <div style={{width:'50%', height:'10%'}}>
-            <div><Line options={config} data={data}/></div>
+            <div><Line options={config} data={graphDataSets}/></div>
         </div>
         <p>Lähde: </p>
         <a href="https://www.metoffice.gov.uk/hadobs/hadcrut5/">HadCRUT5</a>
