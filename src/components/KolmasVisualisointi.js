@@ -103,7 +103,7 @@ export default function KolmasVisualisointi() {
           const monthlyData = [];
 
             for (const val of res) {
-            {
+            
                 if(val.month === 0) {
                   console.log("Found data for annual!");
                   annual.set(val.year.toString(), val.data);
@@ -113,7 +113,7 @@ export default function KolmasVisualisointi() {
                   monthly.set(val.year.toString() + "-" + val.month.toString().padStart(2,"0")+ "-01", val.data);
                   monthlyData.push({time:val.year.toString() + "-" + val.month.toString().padStart(2,"0")+ "-01", data: val.data})
                 }
-              }
+              
             }
             setV3AnnualData(annualData);
             setV3MonthlyData(monthlyData);
@@ -174,6 +174,7 @@ export default function KolmasVisualisointi() {
         <div style={{width:'50%', height:'10%'}}>
             <div><Line options={config} data={graphDataSets}/></div>
         </div>
+        <p>The graphs show monthly and annual mean carbon dioxide measured at Mauna Loa Observatory, Hawaii. The carbon dioxide data on Mauna Loa constitute the longest record of direct measurements of CO2 in the atmosphere.</p>
         <p>Lähde: </p>
         <a href="https://gml.noaa.gov/ccgg/trends/">Mauna Loa</a>
       </div>
