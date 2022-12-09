@@ -41,8 +41,8 @@ const config = {
       type: "time"
     },
     y: {
-      min: -1,
-      max: 1,
+      min: -1.5,
+      max: 1.5,
       beginAtZero: true
     }
   },
@@ -64,9 +64,14 @@ const config = {
     title: {
       display: true,
       text: 'Ilmasto 1850-2022'
+    },
+    onClick(e) {
+      const chart = e.chart;
+      chart.resetZoom();
     }
   }
 }
+
 
 export default function EkaVisualisointi() {
 
