@@ -163,11 +163,7 @@ export default function EkaVisualisointi() {
           for (const val of res) {
             console.log("Found data for temperature reconstruction!")
 
-            if (val.year < 10){
-              temp.push({year: val.year.toString().padStart(4, "0"), data: val.data});
-            } else if ( val.year >=10 && val.year < 100) {
-              temp.push({year: val.year.toString().padStart(4, "0"), data: val.data});
-            } else if ( val.year >=100 && val.year < 1000) {
+            if (val.year < 1000){
               temp.push({year: val.year.toString().padStart(4, "0"), data: val.data});
             } else {
               temp.push({year: val.year.toString(), data: val.data});
