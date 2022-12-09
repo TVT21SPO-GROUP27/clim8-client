@@ -92,12 +92,12 @@ export default function EkaVisualisointi() {
       const [v1globalmonthlynorth, setv1Globalmonthlynorth] = useState();
       const [v1globalannualsouth, setv1Globalannualsouth] = useState();
       const [v1globalmonthlysouth, setv1Globalmonthlysouth] = useState();
+      const [tempReconstruction, settempReconstruction] = useState();
 
     useEffect(()=> {
        const fetchData= async()=> {
           const url = 'http://localhost:8080/hadcrutdata'
           const url2 = 'http://localhost:8080/mobergdata'
-          const dataset2 = [];
           
           let anual = new Map([
             ["global", new Map()],
@@ -173,9 +173,14 @@ export default function EkaVisualisointi() {
             return res
          }).then((res) => {
           console.log(res)
+
+          const temp = [];
+
           for (const val of res) {
-           dataset2.push(val.data);
-          }}).catch(e => {
+           temp.push({time: val.year.toString(), data: val.data});
+          }
+          settempReconstruction(temp);
+        }).catch(e => {
             console.log("error", e)
         })
 
@@ -187,7 +192,6 @@ export default function EkaVisualisointi() {
 
 
     let graphDataSets = {
-      //labels: Array.from(monthly.get("global").keys()),
       datasets: [
         {
           label: 'Monthly - Global',
@@ -254,15 +258,18 @@ export default function EkaVisualisointi() {
             xAxisKey: "time",
             yAxisKey: "data",
           }
-        },/*
+        },
         {
           label: 'Northern Hemisphere 2,000-year temperature reconstruction',
-          data: dataset2,
+          data: tempReconstruction,
           fill: false,
           borderColor: 'rgb(0, 234, 255)',
           tension: 0.1,
-          indexAxis: 'x'
-        }*/
+          parsing: {
+            xAxisKey: "time",
+            yAxisKey: "data",
+          }
+        }
       ]
     }
    
@@ -272,7 +279,8 @@ export default function EkaVisualisointi() {
             <div><Line options={config} data={graphDataSets}/></div>
         </div>
         <p>Lähde: </p>
-        <a href="https://www.metoffice.gov.uk/hadobs/hadcrut5/">HadCRUT5</a>
+        <p><a href="https://www.metoffice.gov.uk/hadobs/hadcrut5/">HadCRUT5</a></p>
+        <p><a href="https://www.nature.com/articles/nature03265">nature.com</a></p>
       </div>
          )
 }
