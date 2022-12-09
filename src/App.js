@@ -7,7 +7,7 @@ import { KirjauduSisään } from './components/KirjauduSisään';
 import { Home } from './components/Home';
 import { LuoKäyttäjä } from './components/LuoKäyttäjä';
 import EkaVisualisointi from './components/EkaVisualisointi';
-
+import KolmasVisualisointi from './components/KolmasVisualisointi';
 function App() {
   return (
     <>
@@ -17,6 +17,7 @@ function App() {
       <Route path='/kirjaudu' element={<KirjauduSisään />} />
       <Route path='/luokayttaja' element={<LuoKäyttäjä />} />
       <Route path='/1Visualisointi' element={<EkaVisualisointi />} />
+      <Route path='/3Visualisointi' element={ <KolmasVisualisointi /> } />
     </Routes>
     </>
   );
