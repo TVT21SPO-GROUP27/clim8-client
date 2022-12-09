@@ -23,6 +23,7 @@ function Navbar() {
           </a>
           <ul class="dropdown-menu">
             <li><Link class="dropdown-item" to="/1Visualisointi">Ilmasto 1850-2022</Link></li>
+            <li><Link class="dropdown-item" to="/3Visualisointi">Hawaii Mauna Loa Co2 1958-2022 </Link></li>
           </ul>
         </li>
       </ul>
