@@ -63,7 +63,7 @@ const config = {
     },
     title: {
       display: true,
-      text: 'Ilmasto 1850-2022'
+      text: 'Climate 1850-2022'
     },
     onClick(e) {
       const chart = e.chart;
@@ -266,15 +266,12 @@ export default function EkaVisualisointi() {
         <div style={{width:'50%', height:'10%'}}>
             <div><Line options={config} data={graphDataSets}/></div>
         </div>
-        <p>Lähde: </p>
-        <p><a href="https://www.metoffice.gov.uk/hadobs/hadcrut5/">HadCRUT5</a></p>
-        <div>
-        <p><a href="https://www.nature.com/articles/nature03265">nature.com</a></p>
-          <li>
+        <p>Source(s): </p>
+        <li><a href="https://www.metoffice.gov.uk/hadobs/hadcrut5/">HadCRUT5</a></li>
+        <li><a href="https://www.nature.com/articles/nature03265">nature.com</a></li>
+          <ul>
             Nature.com provides a dataset which reconstructs Earths temperature from the last 2000 years.
-          </li>
+          </ul>
         </div>
-        
-      </div>
          )
 }

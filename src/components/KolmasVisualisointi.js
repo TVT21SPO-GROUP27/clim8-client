@@ -62,33 +62,12 @@ const config = {
   }
 }
 export default function KolmasVisualisointi() {
-  useState({
-        labels:'Mauna Loa 1958-2022',
-        datasets: [
-          {
-            label: 'Dataset 1',
-            data:[],
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(25, 90, 13, 0.5)',
-          },
-          {
-            label: 'Dataset 2',
-            data:[],
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(25, 90, 13, 0.5)',
-          }
-        ]
-      });
       const [v3AnnualData, setV3AnnualData] = useState();
       const [v3MonthlyData, setV3MonthlyData] = useState();
 
     useEffect(()=> {
        const fetchData= async()=> {
           const url = 'http://localhost:8080/maunaloadata'
-          
-          let annual = new Map([]);
-
-          let monthly = new Map([]);
 
          await fetch(url).then((data)=> {
             console.log(data)
@@ -104,11 +83,9 @@ export default function KolmasVisualisointi() {
             
                 if(val.month === 0) {
                   console.log("Found data for annual!");
-                  annual.set(val.year.toString(), val.data);
                   annualData.push({time:val.year.toString(), data: val.data})
                 } else {
                   console.log("Found data for monthly!");
-                  monthly.set(val.year.toString() + "-" + val.month.toString().padStart(2,"0")+ "-01", val.data);
                   monthlyData.push({time:val.year.toString() + "-" + val.month.toString().padStart(2,"0")+ "-01", data: val.data})
                 }
               
@@ -159,9 +136,9 @@ export default function KolmasVisualisointi() {
         <div style={{width:'50%', height:'10%'}}>
             <div><Line options={config} data={graphDataSets}/></div>
         </div>
-        <p>The graphs show monthly and annual mean carbon dioxide measured at Mauna Loa Observatory, Hawaii. The carbon dioxide data on Mauna Loa constitute the longest record of direct measurements of CO2 in the atmosphere.</p>
-        <p>Lähde: </p>
-        <a href="https://gml.noaa.gov/ccgg/trends/">Mauna Loa</a>
+        <p>Source(s): </p>
+        <li><a href="https://gml.noaa.gov/ccgg/trends/">Mauna Loa</a></li>
+        <ul><p>The graphs show monthly and annual mean carbon dioxide measured at Mauna Loa Observatory, Hawaii. The carbon dioxide data on Mauna Loa constitute the longest record of direct measurements of CO2 in the atmosphere.</p></ul>
       </div>
          )
 }

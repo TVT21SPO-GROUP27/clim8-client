@@ -1,5 +1,5 @@
-import axios from 'axios';
 import React, { useState } from 'react';
+import axios from 'axios';
 
 export function LuoKäyttäjä() {
     const [name, setName] = useState("");
@@ -18,52 +18,47 @@ export function LuoKäyttäjä() {
 
     try {
       const res = await axios.post(url, 
-      {username: name, email: email, password: password});
+      {name: name, email: email, password: password});
       console.log(res.data);
     } catch (error) {
       console.log(error.response);
     }
-    /*console.log('nimi', name)
-    console.log('sposti', sposti)
-    console.log('salasana', salasana)
-    console.log('vahvistettuSalasana', vahvistettuSalasana)*/
-    
   }
 
   return (
     <div>
-      <h3>Luo Käyttäjä</h3>
+      <h3>Create User</h3>
        <form onSubmit={handleSubmit}>
         <div>
             <input type="name" 
             value={name}
-  	        placeholder = "Nimi"
+  	        placeholder = "Username"
             required
             onChange={e => setName(e.target.value)} />
         </div>
             <div>
                 <input type="email"
                 value={email}
-                placeholder = "Sähköposti"
+                placeholder = "Email"
                 required
                 onChange={e => setEmail(e.target.value)} />
             </div>
                 <div>
                     <input type="password" 
                     value={password}
-                    placeholder="Salasana"
+                    placeholder="Password"
                     required
                     onChange={e => setPassword(e.target.value)} />
                 </div>
               <div>
                 <input type="password"
                 value = {vahvistettuSalasana}
-                placeholder="Vahvista salasana"
+                placeholder="Confirm password"
                 required
                 onChange = {e => vahvistaSalasana(e.target.value)} />
               </div>
                 <input type = "submit" />
-        {error && <p>Salasanat ei täsmää keskenään.</p>}
+        {error && <p>Passwords do not match!</p>}
       </form>
     </div>
   )
