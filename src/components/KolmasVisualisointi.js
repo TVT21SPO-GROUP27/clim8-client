@@ -28,6 +28,12 @@ ChartJS.register(
     zoomPlugin
   );
 
+  function getCorrectSeries(series) {
+    if(series === "DE08") return "de08";
+    else if(series === "DE08-2") return "de08-2";
+    else if(series === "DSS") return "dss";
+    else return "";
+  }
 
 const config = {
   scales: {
@@ -58,16 +64,30 @@ const config = {
     title: {
       display: true,
       text: 'Mauna Lao 1958-2022'
+    },
+    onClick(e) {
+      const chart = e.chart;
+      chart.resetZoom();
     }
   }
 }
 export default function KolmasVisualisointi() {
       const [v3AnnualData, setV3AnnualData] = useState();
       const [v3MonthlyData, setV3MonthlyData] = useState();
+      const [v1icecore, setv1IceCore] = useState();
+      const [v2icecore, setv2IceCore] = useState();
+      const [v3icecore, setv3IceCore] = useState();
 
     useEffect(()=> {
        const fetchData= async()=> {
           const url = 'http://localhost:8080/maunaloadata'
+          const url2 = 'http://localhost:8080/icecoredata'
+
+          let series = new Map([
+            ["de08", new Map()],
+            ["de08-2", new Map()],
+            ["dss", new Map()]
+          ]);
 
          await fetch(url).then((data)=> {
             console.log(data)
@@ -96,7 +116,40 @@ export default function KolmasVisualisointi() {
               console.log("error", e)
           })
 
-        }
+          const icecore1 = [];
+          const icecore2 = [];
+          const icecore3 = [];
+
+          await fetch(url2).then((data)=> {
+            console.log(data)
+            const res = data.json();
+            return res
+         }).then((res) => {
+          console.log(res)
+
+          for (const val of res) {
+              if(val.series === "DE08") {
+                console.log("Found data DE08!");
+                series.get(getCorrectSeries(val.series)).set(val.year.toString(), val.data);
+                icecore1.push({time:val.year.toString(), data: val.data})
+              } else if(val.series === "DE08-2") {
+                console.log("Found data DE08-02!");
+                series.get(getCorrectSeries(val.series)).set(val.year.toString(), val.data);
+                icecore2.push({time:val.year.toString(), data: val.data})
+              } else if(val.series === "DSS") {
+                console.log("Found data DSS!");
+                series.get(getCorrectSeries(val.series)).set(val.year.toString(), val.data);
+                icecore3.push({time:val.year.toString(), data: val.data})
+              }
+            }
+            console.log(series);
+            setv1IceCore(icecore1);
+            setv2IceCore(icecore2);
+            setv3IceCore(icecore3);
+        }).catch(e => {
+          console.log("error", e)
+        })
+      }
         
         fetchData();
     },[])
@@ -115,7 +168,6 @@ export default function KolmasVisualisointi() {
             yAxisKey: "data",
           },
         },
-
         { 
           label: 'Annual Co2 Measurements',
           data: v3AnnualData,
@@ -127,6 +179,39 @@ export default function KolmasVisualisointi() {
             yAxisKey: "data",
           },
         },
+        { 
+          label: 'DE08 Ice Core Data',
+          data: v1icecore,
+          fill: false,
+          borderColor: 'rgb(255, 192, 192)',
+          tension: 0.1,
+          parsing: {
+            xAxisKey: "time",
+            yAxisKey: "data",
+          },
+        },
+        { 
+          label: 'DE08-02 Ice Core Data',
+          data: v2icecore,
+          fill: false,
+          borderColor: 'rgb(160, 15, 66)',
+          tension: 0.1,
+          parsing: {
+            xAxisKey: "time",
+            yAxisKey: "data",
+          },
+        },
+        { 
+          label: 'DSS Ice Core Data',
+          data: v3icecore,
+          fill: false,
+          borderColor: 'rgb(26, 19, 192)',
+          tension: 0.1,
+          parsing: {
+            xAxisKey: "time",
+            yAxisKey: "data",
+          },
+        }
    
       ]
     }
