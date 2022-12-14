@@ -120,7 +120,7 @@ export default function VitosVisualisointi() {
           borderColor: 'rgb(75, 192, 192)',
           tension: 0.1,
           parsing: {
-            xAxisKey: "year",
+            xAxisKey: "time",
             yAxisKey: "data",
           },
         }
