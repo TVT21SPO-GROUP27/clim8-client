@@ -35,6 +35,7 @@ Tekijät olivat Niklas Siltala, Timon Poutiainen, Joona Sivonen ja Lassi Riekkol
   </picture>
 </div> 
 
+Tietokanta toimii siten, että se käy suoraan internetistä lukemassa CSV- tai tekstitiedoston, missä ilmastonmuutoksen tutkimusdata sijaitsee. Tämän jälkeen se luo tiedoston localdata.db, johon se tallettaa tiedot. Tällaisella toteutus tavalla tietokannan tietoja ei tarvitse itse käsin kirjoittaa tietokantaan. Kun käynnistää Serverin ensimmäistä kertaa, siinä menee pitempään juurikin sen takia, koska sen pitää hakea internetistä ensin tiedot tietokantaan. Osa tiedoista on kuitenkin “kovakoodattu” tietokantaan koska ihan kaikkea tutkimustyön dataa ei ollut saatavilla teksti –tai csv –tiedostona. 
 
 ## Github & Sovellus -linkki:  
 
