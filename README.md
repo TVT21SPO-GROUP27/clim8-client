@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+# 🌍 | clim8
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Clim8 on Oulun ammattikorkeakoulun 2. vuoden ohjelmistokehityksen opiskelijoiden luoma sovellus joka visualisoi ilmastonmuutosta. 
 
-## Available Scripts
+Projektin toteuttamiseen tarvittiin Server ja Client. Server-puoli hoitaa tietokannan ja tiedon haun. Client-puoli hoitaa sovelluksen käyttöliittymän ja tiedon näyttämisen käyttäjälle.  
 
-In the project directory, you can run:
+Asiakas voi käyttää sovellusta katsoakseen valmiiksi tehtyjä kaavioita ja käyttää niiden ominaisuuksia. Halutessaan asiakas voi luoda käyttäjän, jolloin hän pystyy itse luomaan erilaisia kaavioita ja tallettamaan niitä. Käyttäjä voi myös jakaa luomansa kaavion linkkinä. Jaetun kaavion avaamiseen ei tarvitse luoda käyttäjää. 
 
-### `npm start`
+## Teknologiat 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Client-puoli luotiin käyttämällä React Frameworkia ja ohjelmointikielenä käytettiin JavaScriptiä. Server –puoli luotiin käyttämällä Spring Boot Frameworkia ja Gradle-buildaustyökalua ja ohjelmointikielenä käytettiin Javaa. 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Tekijät 
+Tekijät olivat Niklas Siltala, Timon Poutiainen, Joona Sivonen ja Lassi Riekkola 
 
-### `npm test`
+## Tietokantarakenne 
+<div align='center'>
+  <picture>
+    <img src='../master/Photos/hadcrut1.png' height='192' alt="Logo">
+  </picture>
+</div> 
+<div align='center'>
+  <picture>
+    <img src='../master/Photos/hadcrut2.png' height='192' alt="Logo">
+  </picture>
+</div> 
+<div align='center'>
+  <picture>
+    <img src='../master/Photos/hadcrut3.png' height='192' alt="Logo">
+  </picture>
+</div> 
+<div align='center'>
+  <picture>
+    <img src='../master/Photos/localdata.png' height='192' alt="Logo">
+  </picture>
+</div> 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Tietokanta toimii siten, että se käy suoraan internetistä lukemassa CSV- tai tekstitiedoston, missä ilmastonmuutoksen tutkimusdata sijaitsee. Tämän jälkeen se luo tiedoston localdata.db, johon se tallettaa tiedot. Tällaisella toteutus tavalla tietokannan tietoja ei tarvitse itse käsin kirjoittaa tietokantaan. Kun käynnistää Serverin ensimmäistä kertaa, siinä menee pitempään juurikin sen takia, koska sen pitää hakea internetistä ensin tiedot tietokantaan. Osa tiedoista on kuitenkin “kovakoodattu” tietokantaan koska ihan kaikkea tutkimustyön dataa ei ollut saatavilla teksti –tai csv –tiedostona. 
+## Käyttöliittymä
+<div align='center'>
+  <picture>
+    <img src='../master/Photos/appjs.png' height='192' alt="Logo">
+  </picture>
+</div> 
+Käyttöliittymässä eli Client -puolella App.js tiedostossa (kuva 5) on luotu reitti eli osoite jokaiselle komponentille missä komponentti renderöidään näkyviin. Esimerkkinä ensimmäinen visualisointi näyttää seuraavanlaiselta:  
+<div align='center'>
+  <picture>
+    <img src='../master/Photos/vis1.png' height='192' alt="Logo">
+  </picture>
+</div> 
+Muihin visualisointeihin päästään käsiksi painamalla Visualisations -valikon alapuolella olevia painikkeita:  
+<div align='center'>
+  <picture>
+    <img src='../master/Photos/navbar.png' height='192' alt="Logo">
+  </picture>
+</div>
 
-### `npm run build`
+## Github & Sovellus -linkki:  
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+https://github.com/TVT21SPO-GROUP27 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+http://www.clim8.fi/ 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Demovideolta näkyy että V8 ja V10 ei toimi, ne jäi meillä keskeneräisiksi. 
 
-### `npm run eject`
+Demovideo linkki: 
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+https://www.youtube.com/watch?v=csCYdJ029_A
