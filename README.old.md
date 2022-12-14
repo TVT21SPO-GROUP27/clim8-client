@@ -19,4 +19,5 @@ Tekijät olivat Niklas Siltala, Timon Poutiainen, Joona Sivonen ja Lassi Riekkol
 ## Github & Sovellus -linkki:  
 
 https://github.com/TVT21SPO-GROUP27 
+
 http://www.clim8.fi/ 
