@@ -1,10 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
- 
 
 function Navbar() {
   return (
-<<<<<<< Updated upstream
+
   <nav>
     <div class="container-fluid">
       <Link className="navbar-brand" to='/'>Sovellus</Link>
@@ -24,7 +23,7 @@ function Navbar() {
           </li>
         </ul>
       </div>
-=======
+
   <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
     <Link class="navbar-brand" to="/" >Clim8</Link>
@@ -54,9 +53,13 @@ function Navbar() {
           </ul>
         </li>
       </ul>
->>>>>>> Stashed changes
+
+          </ul>
+        </li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
   )
 }
 
