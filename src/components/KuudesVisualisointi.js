@@ -31,21 +31,16 @@ ChartJS.register(
 const config = {
   scales: {
     x: {
-      type: "time",
-      time: {
-        displayFormats: {
-          years: 'YYYYY'
-        }
-      }
+        reverse: true,
     },
     y: {
-      min: 180,
-      max: 300,
+      min: 150,
+      max: 400,
       beginAtZero: true
     }
   },
   plugins: {
-    zoom: {
+    /*zoom: {
       zoom: {
         wheel: {
           enabled: true
@@ -58,10 +53,10 @@ const config = {
         mode: "xy",
         speed: 100
       }
-    },
+    },*/
     title: {
       display: true,
-      text: 'Vostok Ice Core Co2 measurements, 417160 BC - 2342 AD'
+      text: 'V6 Ice core 800k year composite study CO2 measurements'
     },
     onClick(e) {
       const chart = e.chart;
@@ -73,11 +68,11 @@ const config = {
 
 export default function VitosVisualisointi() {
 
-      const [vostokData, setVostokData] = useState();
+      const [acoreData, setACoreData] = useState();
 
     useEffect(()=> {
        const fetchData= async()=> {
-          const url = 'http://localhost:8080/vostokcoredata'
+          const url = 'http://localhost:8080/acoredata'
 
          await fetch(url).then((data)=> {
             console.log(data)
@@ -86,13 +81,13 @@ export default function VitosVisualisointi() {
          }).then((res) => {
             console.log(res)
 
-          const vostokcoredata = [];
+          const acoredata = [];
 
             for (const val of res) {
-            vostokcoredata.push({year:val.year.toString(), data: val.data})
-           }
-            setVostokData(vostokcoredata);
-            console.log(vostokcoredata);
+            acoredata.push({year:val.year.toString().padStart(4, "0"), data: val.data})        
+        }
+            setACoreData(acoredata);
+            console.log(acoredata);
 
           }).catch(e => {
               console.log("error", e)
@@ -107,8 +102,8 @@ export default function VitosVisualisointi() {
     let graphDataSets = {
       datasets: [
         {
-          label: 'Vostok Ice Core Co2 Measurements',
-          data: vostokData,
+          label: 'Antarctic Ice Cores',
+          data: acoreData,
           fill: false,
           borderColor: 'rgb(75, 192, 192)',
           tension: 0.1,
@@ -122,11 +117,11 @@ export default function VitosVisualisointi() {
    
     return(
       <div>
-        <div style={{width:'50%', height:'10%'}}>
+        <div style={{width:'70%', height:'20%'}}>
             <div><Line options={config} data={graphDataSets}/></div>
         </div>
         <p>Source(s): </p>
-        <li><a href="https://cdiac.ess-dive.lbl.gov/trends/co2/vostok.html">Vostok</a></li>
+        <li><a href="https://www.ncei.noaa.gov/access/paleo-search/study/17975">Antarctic Ice Cores Revised</a></li>
           <ul>
             <p>
 

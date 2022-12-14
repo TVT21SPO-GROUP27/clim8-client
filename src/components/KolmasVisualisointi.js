@@ -224,6 +224,8 @@ export default function KolmasVisualisointi() {
         <p>Source(s): </p>
         <li><a href="https://gml.noaa.gov/ccgg/trends/">Mauna Loa</a></li>
         <ul><p>The graphs show monthly and annual mean carbon dioxide measured at Mauna Loa Observatory, Hawaii. The carbon dioxide data on Mauna Loa constitute the longest record of direct measurements of CO2 in the atmosphere.</p></ul>
+        <li><a href= "https://cdiac.ess-dive.lbl.gov/trends/co2/lawdome.html">Antartic Ice Core records</a></li>
+        <ul></ul>
       </div>
          )
 }

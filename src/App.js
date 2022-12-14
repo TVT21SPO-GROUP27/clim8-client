@@ -9,6 +9,7 @@ import { LuoKäyttäjä } from './components/LuoKäyttäjä';
 import EkaVisualisointi from './components/EkaVisualisointi';
 import KolmasVisualisointi from './components/KolmasVisualisointi';
 import VitosVisualisointi from './components/VitosVisualisointi';
+import KuudesVisualisointi from './components/KuudesVisualisointi';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path='/1Visualisointi' element={<EkaVisualisointi />} />
       <Route path='/3Visualisointi' element={ <KolmasVisualisointi /> } />
       <Route path='/5Visualisointi' element= { <VitosVisualisointi />} />
+      <Route path='/6Visualisointi' element= { <KuudesVisualisointi />} />
     </Routes>
     </>
   );
