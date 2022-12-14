@@ -19,6 +19,21 @@ Tekijät olivat Niklas Siltala, Timon Poutiainen, Joona Sivonen ja Lassi Riekkol
     <img src='../master/Photos/hadcrut1.png' height='192' alt="Logo">
   </picture>
 </div> 
+<div align='center'>
+  <picture>
+    <img src='../master/Photos/hadcrut2.png' height='192' alt="Logo">
+  </picture>
+</div> 
+<div align='center'>
+  <picture>
+    <img src='../master/Photos/hadcrut3.png' height='192' alt="Logo">
+  </picture>
+</div> 
+<div align='center'>
+  <picture>
+    <img src='../master/Photos/localdata.png' height='192' alt="Logo">
+  </picture>
+</div> 
 
 
 ## Github & Sovellus -linkki:  
