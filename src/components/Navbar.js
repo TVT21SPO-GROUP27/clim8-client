@@ -26,6 +26,7 @@ function Navbar() {
             <li><Link class="dropdown-item" to="/3Visualisointi">Hawaii Mauna Loa Co2 1958-2022 </Link></li>
             <li><Link class="dropdown-item" to="/5Visualisointi">Vostok Ice Core Co2 417160-2342 </Link></li>
             <li><Link class="dropdown-item" to="/6Visualisointi">Antarctic Ice Cores Revised </Link></li>
+            <li><Link class="dropdown-item" to="/7Visualisointi">Evolution of global temperature </Link></li>
           </ul>
         </li>
       </ul>
