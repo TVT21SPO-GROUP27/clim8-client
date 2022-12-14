@@ -32,11 +32,6 @@ const config = {
   scales: {
     x: {
       type: "time",
-      time: {
-        displayFormats: {
-          years: 'YYYYY'
-        }
-      }
     },
     y: {
       min: 180,

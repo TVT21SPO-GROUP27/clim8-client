@@ -124,7 +124,7 @@ export default function VitosVisualisointi() {
         <li><a href="https://www.ncei.noaa.gov/access/paleo-search/study/17975">Antarctic Ice Cores Revised</a></li>
           <ul>
             <p>
-
+                This graph reconstructs CO2 concentrations for the last 800,000 years.
             </p>
           </ul>
         </div>
