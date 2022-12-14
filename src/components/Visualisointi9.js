@@ -5,24 +5,6 @@ ChartJs.register(
   Tooltip, Title, ArcElement, Legend
 );
 
-
-const data = {
-    datasets: [{
-        data: [10, 20, 30],
-        backgroundColor:[
-          'red',
-          'blue',
-          'yellow'
-        ]
-    },
-  ],
-
-  labels: [
-      'Red',
-      'Yellow',
-      'Blue'
-  ], 
-};
 export default function Visualisointi9() {
   const [data, setData] = useState({
     datasets: [{
@@ -37,7 +19,11 @@ export default function Visualisointi9() {
   labels: [
       'Red',
       'Yellow',
-      'Blue'
+      'Blue',
+      'Green',
+      'Black',
+      'Blue',
+      'Pink'
   ], 
 });
   useEffect(()=> {
@@ -60,7 +46,11 @@ export default function Visualisointi9() {
                 backgroundColor:[
                   'red',
                   'blue',
-                  'yellow'
+                  'yellow',
+                  'Green',
+                  'Black',
+                  'Blue',
+                  'Pink'
                 ]
             },
           ],
