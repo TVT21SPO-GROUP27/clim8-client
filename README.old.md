@@ -16,8 +16,7 @@ Tekijät olivat Niklas Siltala, Timon Poutiainen, Joona Sivonen ja Lassi Riekkol
 ## Tietokantarakenne 
 <div align='center'>
   <picture>
-    <source srcset='[https://raw.githubusercontent.com/TVT21SPO-GROUP27/clim8-server/main/icon/clim8.png%27%3E](https://github.com/TVT21SPO-GROUP27/clim8-client/blob/master/Photos/hadcrut1.png)
-    <img src='../icon/clim8.png' height='192' alt="Logo">
+    <img src='../master/Photos/hadcrut1.png' height='192' alt="Logo">
   </picture>
 </div> 
 
