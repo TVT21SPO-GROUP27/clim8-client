@@ -128,13 +128,14 @@ export default function VitosVisualisointi() {
    
     return(
       <div>
-        <div style={{width:'70%', height:'20%'}}>
+        <div style={{width:'60%', height:'20%'}}>
             <div><Line options={config} data={graphDataSets}/></div>
         </div>
         <p>Source(s): </p>
         <li><a href="https://cdiac.ess-dive.lbl.gov/trends/co2/vostok.html">Vostok</a></li>
           <ul>
             <p>
+              Here you can see the Co2 measurements from ice-drilling project between Russia, the United States, and France at the Russian Vostok station in East Antarctica.
 
             </p>
           </ul>
