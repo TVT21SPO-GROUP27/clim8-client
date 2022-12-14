@@ -11,6 +11,9 @@ import KolmasVisualisointi from './components/KolmasVisualisointi';
 import VitosVisualisointi from './components/VitosVisualisointi';
 import KuudesVisualisointi from './components/KuudesVisualisointi';
 import SeitsemäsVisualisointi from './components/SeitsemäsVisualisointi';
+import Visualisointi8 from './components/Visualisointi8';
+import Visualisointi9 from './components/Visualisointi9';
+
 
 function App() {
   return (
@@ -25,6 +28,9 @@ function App() {
       <Route path='/5Visualisointi' element= { <VitosVisualisointi />} />
       <Route path='/6Visualisointi' element= { <KuudesVisualisointi />} />
       <Route path='/7Visualisointi' element= { <SeitsemäsVisualisointi />} />
+      <Route path='/8Visualisointi' element= { <Visualisointi8 />} />
+      <Route path='/9Visualisointi' element= { <Visualisointi9 />} />
+
     </Routes>
     </>
   );
