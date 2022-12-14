@@ -63,7 +63,7 @@ const config = {
     },
     title: {
       display: true,
-      text: 'Mauna Lao 1958-2022'
+      text: 'Mauna Loa 1958-2022'
     },
     onClick(e) {
       const chart = e.chart;
