@@ -1,3 +1,5 @@
+
+
 import zoomPlugin from 'chartjs-plugin-zoom';
 import {useEffect, useState} from 'react';
 import { Line } from 'react-chartjs-2';
@@ -15,6 +17,8 @@ import {
     LineElement,
   } from 'chart.js';
 
+
+
 ChartJS.register(
     LineElement,
     CategoryScale,
@@ -31,25 +35,29 @@ ChartJS.register(
 const config = {
   scales: {
     x: {
-      type: "time",
-      min: "2300",
-        
-
+      reverse: true,
+      ticks: {
+        maxTicksLimit: 64
+      }
     },
+   
     y: {
       min: 170,
       max: 330,
-      beginAtZero: true
+      beginAtZero: true,
+      ticks : {
+        stepSize: 10
+      }
     }
   },
   plugins: {
     zoom: {
       zoom: {
         wheel: {
-          enabled: true
+        // enabled: true
         },
         mode: "xy",
-        speed: 100
+        speed: 0.1
       },
       pan: {
         enabled: true,
@@ -86,13 +94,11 @@ export default function VitosVisualisointi() {
 
           const vostokcoredata = [];
 
+          
             for (const val of res) {
-            
-            vostokcoredata.push({time:val.year.toString(), data: val.data})
-       
+            vostokcoredata.push({time: val.year.toString() + "BC", data: val.data})
         }
             setVostokData(vostokcoredata);
-            console.log(vostokcoredata);
 
           }).catch(e => {
               console.log("error", e)
@@ -122,7 +128,7 @@ export default function VitosVisualisointi() {
    
     return(
       <div>
-        <div style={{width:'50%', height:'10%'}}>
+        <div style={{width:'70%', height:'20%'}}>
             <div><Line options={config} data={graphDataSets}/></div>
         </div>
         <p>Source(s): </p>
